@@ -14,15 +14,19 @@ Eric Soto
 
 
 Current Target for Game:
+People who are into RPG horro survival games. 
 
 
 General goals for each person:
 Steph
- - Mapping
-
-&nbsp;- Menu
-
-&nbsp;- Add Weapons/items inside map to pick up
+ - Mapping (cemetery and abandoned hospital
+ - Menu connecting play and quit buttons to go to specific scenes
+ - Add Weapons/items inside map to pick up; maybe make an inventory window so player can choose from
+Eric
+ - Enemy development and movements
+ - NavMesh
+Julian
+ - Player development and movements
 
 
 
