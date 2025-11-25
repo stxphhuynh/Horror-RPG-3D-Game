@@ -150,7 +150,7 @@ Transform:
   m_GameObject: {fileID: 304268618}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 4.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -220,7 +220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 083a30efa3cd4c9b6958e109b4acf458, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.96
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 083a30efa3cd4c9b6958e109b4acf458, type: 3}
       propertyPath: m_LocalPosition.z
@@ -265,6 +265,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 083a30efa3cd4c9b6958e109b4acf458, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1116825370}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 083a30efa3cd4c9b6958e109b4acf458, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1116825371}
   m_SourcePrefab: {fileID: 100100000, guid: 083a30efa3cd4c9b6958e109b4acf458, type: 3}
 --- !u!1 &705507993
 GameObject:
@@ -693,6 +696,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1116825371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116825368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9780860dc7d07abfcbdfe04932f34cd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1222754446
 GameObject:
   m_ObjectHideFlags: 0
