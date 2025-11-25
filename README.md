@@ -28,7 +28,8 @@ Eric
  - NavMesh
    
 Julian
- - Player development and movements
+ - Player development and movement script.
+ - full animation for main player.
 
 
 
