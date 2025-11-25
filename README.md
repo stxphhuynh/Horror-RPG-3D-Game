@@ -1,4 +1,4 @@
-# Name: Horror-RPG-3D-Game
+# Name: From the Graves
 
 
 
@@ -22,9 +22,11 @@ Steph
  - Mapping (cemetery and abandoned hospital
  - Menu connecting play and quit buttons to go to specific scenes
  - Add Weapons/items inside map to pick up; maybe make an inventory window so player can choose from
+   
 Eric
  - Enemy development and movements
  - NavMesh
+   
 Julian
  - Player development and movements
 
