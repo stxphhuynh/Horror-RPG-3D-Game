@@ -23,8 +23,8 @@ public class PlayerMovement : MonoBehaviour
     public float lookXLimit = 45f;
 
     // Height values for standing / crouching
-    public float defaultHeight = 2f;
-    public float crouchHeight = 1f;
+    public float defaultHeight = 3.5f;
+    public float crouchHeight = 1.5f;
     public float crouchSpeed = 3f;
 
     // Internal movement variables
@@ -37,9 +37,13 @@ public class PlayerMovement : MonoBehaviour
     // Whether the player is allowed to move/look
     private bool canMove = true;
 
+
+    private Animator animator;
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+
+        animator = GetComponent<Animator>();    
 
         // Lock the cursor to the center and hide it
         Cursor.lockState = CursorLockMode.Locked;
@@ -59,6 +63,14 @@ public class PlayerMovement : MonoBehaviour
         // Adjust character height for crouch/stand
         characterController.height = isCrouching ? crouchHeight : defaultHeight;
 
+        // keep the capsule centered so the bottom stays on the ground
+        characterController.center = new Vector3(
+            characterController.center.x,
+            characterController.height / 2f,
+            characterController.center.z
+        );
+
+
         // Pick correct speed depending on crouch
         float curWalk = isCrouching ? crouchSpeed : walkSpeed;
         float curRun = isCrouching ? crouchSpeed : runSpeed;
@@ -75,6 +87,13 @@ public class PlayerMovement : MonoBehaviour
 
         // Calculate movement direction
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+
+        Vector3 horizontalMove = new Vector3(moveDirection.x, 0f, moveDirection.z);
+        float speed = horizontalMove.magnitude;          // 0 = idle, > 0 = moving
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", speed);
+        }
 
         // ---- JUMP ----
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
@@ -94,6 +113,13 @@ public class PlayerMovement : MonoBehaviour
 
         // Move the player controller
         characterController.Move(moveDirection * Time.deltaTime);
+
+        // Attack
+        if (Input.GetMouseButtonDown(0)) // Left click
+        {
+            animator.SetTrigger("Attack");
+        }
+
 
         // ---- CAMERA LOOK ----
         if (canMove)
