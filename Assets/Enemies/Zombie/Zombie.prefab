@@ -784,6 +784,8 @@ GameObject:
   - component: {fileID: 3630580940734888016}
   - component: {fileID: 5042844225760944563}
   - component: {fileID: 7139749666719635542}
+  - component: {fileID: 4907732365095748539}
+  - component: {fileID: 2342076403791751743}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -899,6 +901,34 @@ MonoBehaviour:
   detectionRange: 10
   chaseSpeed: 5
   patrolSpeed: 1
+--- !u!114 &4907732365095748539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3473221189472846420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f38736cd1f542b459f3dab7e9ec58b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+--- !u!114 &2342076403791751743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3473221189472846420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d02f8dfcf76efd40ae812cb03bace29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageToDeal: 10
+  attackCooldown: 1
 --- !u!1 &3483803113244625385
 GameObject:
   m_ObjectHideFlags: 0

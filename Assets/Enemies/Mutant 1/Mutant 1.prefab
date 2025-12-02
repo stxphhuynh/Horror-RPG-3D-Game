@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 2137401223836913321}
   - component: {fileID: 593914417061869611}
   - component: {fileID: 6734616474618675965}
+  - component: {fileID: 8301948859115475668}
+  - component: {fileID: -3001731610655896610}
   m_Layer: 0
   m_Name: Mutant 1
   m_TagString: Untagged
@@ -146,6 +148,34 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &8301948859115475668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121219498180895324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f38736cd1f542b459f3dab7e9ec58b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+--- !u!114 &-3001731610655896610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121219498180895324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d02f8dfcf76efd40ae812cb03bace29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageToDeal: 10
+  attackCooldown: 1
 --- !u!1001 &6533421459196550093
 PrefabInstance:
   m_ObjectHideFlags: 0
