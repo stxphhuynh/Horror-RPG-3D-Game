@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
+    // Weapon link to player
+    public WeaponDamage weaponDamage;
     // Camera the player looks through
     public Camera playerCamera;
 
@@ -115,10 +117,15 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move(moveDirection * Time.deltaTime);
 
         // Attack
-        if (Input.GetMouseButtonDown(0)) // Left click
+        if (Input.GetMouseButtonDown(0))    //leftClick
         {
             animator.SetTrigger("Attack");
+            weaponDamage.ResetSwing();
+            StartCoroutine(EnableWeaponHitbox());
         }
+
+
+
 
 
         // ---- CAMERA LOOK ----
@@ -137,4 +144,14 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
     }
+    private IEnumerator EnableWeaponHitbox()
+    {
+    
+        yield return new WaitForSeconds(.25f);
+        weaponDamage.canDealDamage = true;
+        yield return new WaitForSeconds(0.25f);   // big window, tweak if needed
+        weaponDamage.canDealDamage = false;
+    }
+
+
 }
