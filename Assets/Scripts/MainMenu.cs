@@ -19,4 +19,8 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
         
     }
+    public void WeaponMenu(){
+
+    SceneManager.LoadScene("WeaponMenu");
+    }
 }
