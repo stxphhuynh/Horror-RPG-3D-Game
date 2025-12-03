@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         // name of gameplay scene
-        SceneManager.LoadScene(gameSceneName);
+        SceneManager.LoadScene(1);
         
     }
     public void QuitGame()
@@ -18,5 +18,9 @@ public class MainMenu : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
         
+    }
+    public void WeaponMenu(){
+
+    SceneManager.LoadScene("WeaponMenu");
     }
 }
