@@ -454,6 +454,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 199839052580730309, guid: afcd8ad3597fb48b29f342c9c0414734, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 266545177216287448, guid: afcd8ad3597fb48b29f342c9c0414734, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -119
+      objectReference: {fileID: 0}
     - target: {fileID: 1111363049391890764, guid: afcd8ad3597fb48b29f342c9c0414734, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -543,7 +551,8 @@ PrefabInstance:
       value: WeaponMenu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7933464496301024361, guid: afcd8ad3597fb48b29f342c9c0414734, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afcd8ad3597fb48b29f342c9c0414734, type: 3}
