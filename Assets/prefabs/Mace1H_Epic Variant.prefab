@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mace1H_Epic Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1854720754721900251, guid: cd129f656ecb0a543aba3aec71bf1158, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -5,8 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
+
+    // Weapons
+    public WeaponDamage mace;
+    public WeaponDamage axe;
+    private WeaponDamage currentWeapon;
+
     // Weapon link to player
-    public WeaponDamage weaponDamage;
+    //public WeaponDamage weaponDamage;
+    //public WeaponDamage[] weapons;
+    //private int currentWeaponIndex = 0;
     // Camera the player looks through
     public Camera playerCamera;
 
@@ -45,7 +53,22 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
 
-        animator = GetComponent<Animator>();    
+        animator = GetComponent<Animator>();
+
+        // weapons
+        currentWeapon = mace;
+        mace.gameObject.SetActive(true);
+        axe.gameObject.SetActive(false);
+
+        //for (int i = 0; i < weapons.Length; i++)
+        //{
+        //    if (weapons[i] != null)
+        //    {
+        //        weapons[i].gameObject.SetActive(i == 0);
+        //    }
+        //}
+        //currentWeaponIndex = 0;
+        //weaponDamage = weapons[0];
 
         // Lock the cursor to the center and hide it
         Cursor.lockState = CursorLockMode.Locked;
@@ -116,17 +139,25 @@ public class PlayerMovement : MonoBehaviour
         // Move the player controller
         characterController.Move(moveDirection * Time.deltaTime);
 
+        // weapon switching
+        if (Input.GetKeyDown(KeyCode.Alpha1))   // key "1"
+        {
+            EquipWeapon(mace);   // mace
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))   // key "2"
+        {
+            EquipWeapon(axe);   // axe
+        }
+
         // Attack
         if (Input.GetMouseButtonDown(0))    //leftClick
         {
+            if (currentWeapon == null) { return; }
             animator.SetTrigger("Attack");
-            weaponDamage.ResetSwing();
+            currentWeapon.ResetSwing();
+            //weaponDamage.ResetSwing();
             StartCoroutine(EnableWeaponHitbox());
         }
-
-
-
-
 
         // ---- CAMERA LOOK ----
         if (canMove)
@@ -146,12 +177,41 @@ public class PlayerMovement : MonoBehaviour
     }
     private IEnumerator EnableWeaponHitbox()
     {
-    
+        if (currentWeapon == null) yield break;
         yield return new WaitForSeconds(.25f);
-        weaponDamage.canDealDamage = true;
+        currentWeapon.canDealDamage = true;
         yield return new WaitForSeconds(0.25f);   // big window, tweak if needed
-        weaponDamage.canDealDamage = false;
+        currentWeapon.canDealDamage = false;
     }
+
+    void EquipWeapon(WeaponDamage newWeapon)
+    {
+        if (currentWeapon != null)
+        {
+            currentWeapon.gameObject.SetActive(false);
+        }
+
+        currentWeapon = newWeapon;
+        currentWeapon.gameObject.SetActive(true);
+        currentWeapon.ResetSwing();
+    }
+
+    //void setWeapon(int index)
+    //{
+    //    if (index < 0 || index >= weapons.Length) return;
+    //    if (index == currentWeaponIndex) return;
+
+    //    for (int i = 0; i < weapons.Length; i++)
+    //    {
+    //        if (weapons[i] != null)
+    //            weapons[i].gameObject.SetActive(false);
+    //    }
+
+    //    weapons[index].gameObject.SetActive(true);
+    //    currentWeaponIndex = index;
+    //    weaponDamage = weapons[index];
+    //    weaponDamage.ResetSwing();  // safety
+    //}
 
 
 }
