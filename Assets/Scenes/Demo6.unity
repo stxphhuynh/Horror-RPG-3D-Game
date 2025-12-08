@@ -5926,6 +5926,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 816540406134436577, guid: 5d0bfb15d88ed5c4eaa7bb428ed6b27b, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 7550a15d60ba58943bcb59621ee29dd5, type: 2}
     - target: {fileID: 3929917166467604781, guid: 5d0bfb15d88ed5c4eaa7bb428ed6b27b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.8
@@ -25305,6 +25309,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6199510601544944246, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199510601544944246, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8310175573034525234, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
@@ -46297,7 +46305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1506058795496326755, guid: 6f6376655c92db048a2c5c91ce9d1ebb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.418315
+      value: -3.168315
       objectReference: {fileID: 0}
     - target: {fileID: 1506058795496326755, guid: 6f6376655c92db048a2c5c91ce9d1ebb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -46335,14 +46343,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1590602857347229035, guid: 6f6376655c92db048a2c5c91ce9d1ebb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3473221189472846420, guid: 6f6376655c92db048a2c5c91ce9d1ebb, type: 3}
       propertyPath: m_Name
       value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 3630580940734888016, guid: 6f6376655c92db048a2c5c91ce9d1ebb, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5042844225760944563, guid: 6f6376655c92db048a2c5c91ce9d1ebb, type: 3}
+      propertyPath: m_Speed
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5042844225760944563, guid: 6f6376655c92db048a2c5c91ce9d1ebb, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 7139749666719635542, guid: 6f6376655c92db048a2c5c91ce9d1ebb, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 567786331}
+    - target: {fileID: 7139749666719635542, guid: 6f6376655c92db048a2c5c91ce9d1ebb, type: 3}
+      propertyPath: chaseSpeed
+      value: 3.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7139749666719635542, guid: 6f6376655c92db048a2c5c91ce9d1ebb, type: 3}
       propertyPath: waypoints.Array.data[0]
       value: 
@@ -46350,7 +46378,7 @@ PrefabInstance:
     - target: {fileID: 7139749666719635542, guid: 6f6376655c92db048a2c5c91ce9d1ebb, type: 3}
       propertyPath: waypoints.Array.data[1]
       value: 
-      objectReference: {fileID: 1741802372}
+      objectReference: {fileID: 1506396097}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
