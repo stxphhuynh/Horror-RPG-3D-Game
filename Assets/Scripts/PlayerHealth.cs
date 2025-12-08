@@ -9,6 +9,8 @@ public class PlayerHealth : MonoBehaviour
     // Event for UI to listen to
     public event Action<int, int> OnHealthChanged;
 
+    // game over UI when player dies
+    public GameOverUI gameOverUI;
     private void Awake()
     {
         CurrentHealth = maxHealth;
@@ -36,5 +38,7 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log("Player died!");
         // TODO: add death logic (respawn, game over, etc.)
+        gameOverUI.ShowGameOver();
+
     }
 }
