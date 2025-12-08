@@ -161,6 +161,14 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(EnableWeaponHitbox());
         }
 
+        // Downward Attack
+        if (Input.GetMouseButtonDown(1))
+        {
+            //if (currentWeapon == null) { return; };
+            animator.SetTrigger("DownAttack");
+            currentWeapon.ResetSwing();
+            StartCoroutine(EnableWeaponHitbox());
+        }
         // ---- CAMERA LOOK ----
         if (canMove)
         {
