@@ -25,7 +25,7 @@ public class WeaponDamage : MonoBehaviour
         if (!canDealDamage || hasHitThisSwing)
             return;
 
-        EnemyHealth enemy = other.GetComponentInParent<EnemyHealth>();
+        EnemyStats enemy = other.GetComponentInParent<EnemyStats>();
         if (enemy != null)
         {
             Debug.Log("HIT " + other.name);
