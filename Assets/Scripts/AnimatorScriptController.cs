@@ -6,24 +6,28 @@ public class AnimatorScriptController : MonoBehaviour
 {
     Animator animator;
 
-    // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("NO ANIMATOR FOUND on this GameObject!");
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("w")) 
-        {
-        animator.SetBool("isWalking", true);
-        }
+        bool pressingW = Input.GetKey(KeyCode.W);
+        bool shiftHeld = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        bool running = pressingW && shiftHeld;
 
-        if (!Input.GetKey("w"))
-        {
-        animator.SetBool("isWalking", false);   
-        }
+        // Walking when W is held and NOT running
+        animator.SetBool("isWalking", pressingW && !running);
 
+        // Running when W + Shift
+        animator.SetBool("RunForward", running);
+
+        // Debug so we can SEE what's happening
+        Debug.Log($"W: {pressingW}, Shift: {shiftHeld}, RunForward param: {running}");
     }
 }

@@ -11,10 +11,6 @@ public class PlayerMovement : MonoBehaviour
     public WeaponDamage axe;
     private WeaponDamage currentWeapon;
 
-    // Weapon link to player
-    //public WeaponDamage weaponDamage;
-    //public WeaponDamage[] weapons;
-    //private int currentWeaponIndex = 0;
     // Camera the player looks through
     public Camera playerCamera;
 
@@ -47,28 +43,17 @@ public class PlayerMovement : MonoBehaviour
     // Whether the player is allowed to move/look
     private bool canMove = true;
 
-
     private Animator animator;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-
         animator = GetComponent<Animator>();
 
         // weapons
         currentWeapon = mace;
         mace.gameObject.SetActive(true);
         axe.gameObject.SetActive(false);
-
-        //for (int i = 0; i < weapons.Length; i++)
-        //{
-        //    if (weapons[i] != null)
-        //    {
-        //        weapons[i].gameObject.SetActive(i == 0);
-        //    }
-        //}
-        //currentWeaponIndex = 0;
-        //weaponDamage = weapons[0];
 
         // Lock the cursor to the center and hide it
         Cursor.lockState = CursorLockMode.Locked;
@@ -79,10 +64,9 @@ public class PlayerMovement : MonoBehaviour
     {
         // Forward and right directions based on player rotation
         Vector3 forward = transform.TransformDirection(Vector3.forward);
-        Vector3 right = transform.TransformDirection(Vector3.right);
+        Vector3 right   = transform.TransformDirection(Vector3.right);
 
         // ---- CROUCH ----
-        
         bool isCrouching = Input.GetKey(KeyCode.LeftControl);
 
         // Adjust character height for crouch/stand
@@ -95,17 +79,19 @@ public class PlayerMovement : MonoBehaviour
             characterController.center.z
         );
 
-
         // Pick correct speed depending on crouch
         float curWalk = isCrouching ? crouchSpeed : walkSpeed;
-        float curRun = isCrouching ? crouchSpeed : runSpeed;
+        float curRun  = isCrouching ? crouchSpeed : runSpeed;
 
-        // ---- RUNNING ----
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        // ---- RUNNING INPUT ----
+        bool isRunningInput = Input.GetKey(KeyCode.LeftShift);
 
         // Movement input on vertical and horizontal axes
-        float curSpeedX = canMove ? (isRunning ? curRun : curWalk) * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? (isRunning ? curRun : curWalk) * Input.GetAxis("Horizontal") : 0;
+        float inputVertical   = canMove ? Input.GetAxis("Vertical")   : 0f;
+        float inputHorizontal = canMove ? Input.GetAxis("Horizontal") : 0f;
+
+        float curSpeedX = (isRunningInput ? curRun : curWalk) * inputVertical;
+        float curSpeedY = (isRunningInput ? curRun : curWalk) * inputHorizontal;
 
         // Preserve Y movement (jumping/gravity)
         float movementDirectionY = moveDirection.y;
@@ -113,11 +99,28 @@ public class PlayerMovement : MonoBehaviour
         // Calculate movement direction
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
+        // horizontal speed for animation
         Vector3 horizontalMove = new Vector3(moveDirection.x, 0f, moveDirection.z);
-        float speed = horizontalMove.magnitude;          // 0 = idle, > 0 = moving
+        float speed = horizontalMove.magnitude; // 0 = idle, >0 = moving
+
         if (animator != null)
         {
+            // existing "Speed" parameter (if your Animator uses it)
             animator.SetFloat("Speed", speed);
+
+            // ---- WALK / RUN ANIMATION LOGIC ----
+            bool pressingW  = Input.GetKey(KeyCode.W);
+            bool shiftHeld  = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            bool isGrounded = characterController.isGrounded;
+
+            bool runningForward = pressingW && shiftHeld && isGrounded && canMove;
+            bool walkingForward = pressingW && !runningForward && isGrounded && canMove;
+
+            // Bool parameters in Animator:
+            // "isWalking"  (bool)
+            // "RunForward" (bool)
+            animator.SetBool("isWalking",  walkingForward);
+            animator.SetBool("RunForward", runningForward);
         }
 
         // ---- JUMP ----
@@ -155,7 +158,6 @@ public class PlayerMovement : MonoBehaviour
             if (currentWeapon == null) { return; }
             animator.SetTrigger("Attack");
             currentWeapon.ResetSwing();
-            //weaponDamage.ResetSwing();
             StartCoroutine(EnableWeaponHitbox());
         }
 
@@ -175,6 +177,7 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
     }
+
     private IEnumerator EnableWeaponHitbox()
     {
         if (currentWeapon == null) yield break;
@@ -195,23 +198,4 @@ public class PlayerMovement : MonoBehaviour
         currentWeapon.gameObject.SetActive(true);
         currentWeapon.ResetSwing();
     }
-
-    //void setWeapon(int index)
-    //{
-    //    if (index < 0 || index >= weapons.Length) return;
-    //    if (index == currentWeaponIndex) return;
-
-    //    for (int i = 0; i < weapons.Length; i++)
-    //    {
-    //        if (weapons[i] != null)
-    //            weapons[i].gameObject.SetActive(false);
-    //    }
-
-    //    weapons[index].gameObject.SetActive(true);
-    //    currentWeaponIndex = index;
-    //    weaponDamage = weapons[index];
-    //    weaponDamage.ResetSwing();  // safety
-    //}
-
-
 }

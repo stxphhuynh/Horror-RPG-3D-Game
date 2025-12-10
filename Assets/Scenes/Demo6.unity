@@ -15400,7 +15400,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: be362411c60154d429edd73077f1175f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -15494,10 +15494,10 @@ AudioSource:
   m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b4d992944c04f4892bdaae2348e67fae, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 2360d3ea9a75b4cc0998be99b97657a4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.4
+  m_Pitch: 1.19
   Loop: 1
   Mute: 0
   Spatialize: 0
@@ -25583,7 +25583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2394140988157511072, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
       propertyPath: runSpeed
-      value: 6
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 2394140988157511072, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
       propertyPath: walkSpeed
