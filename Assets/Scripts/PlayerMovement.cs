@@ -105,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (animator != null)
         {
-            // existing "Speed" parameter (if your Animator uses it)
+            
             animator.SetFloat("Speed", speed);
 
             // ---- WALK / RUN ANIMATION LOGIC ----
