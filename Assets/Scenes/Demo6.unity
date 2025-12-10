@@ -13085,7 +13085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &626951694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15657,6 +15657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  gameOverUI: {fileID: 1742981614}
 --- !u!114 &712226074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15863,7 +15864,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  gameOverUI: {fileID: 1742981614}
 --- !u!4 &720335197 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 780d55bf443a9c74d91bf1291263a77a, type: 3}
