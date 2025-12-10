@@ -32,8 +32,8 @@ public class EnemyStats : MonoBehaviour
     }
 
     // DEBUGGING TOOL: This lets you click the enemy to test damage
-    void OnMouseDown()
-    {
-        TakeDamage(20);
-    }
+    //void OnMouseDown()
+    //{
+    //    TakeDamage(20);
+    //}
 }

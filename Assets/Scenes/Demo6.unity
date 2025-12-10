@@ -46751,6 +46751,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 881721423}
     m_Modifications:
+    - target: {fileID: 7767724845127027512, guid: 63c4ecff22850484aa3f19ee511753cc, type: 3}
+      propertyPath: damage
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8222730056704100164, guid: 63c4ecff22850484aa3f19ee511753cc, type: 3}
       propertyPath: m_Name
       value: Mace1H_Epic Variant (1)
@@ -50752,6 +50756,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 881721423}
     m_Modifications:
+    - target: {fileID: 240546469263601856, guid: ca3a5cc4153263d49b22e13c008c61db, type: 3}
+      propertyPath: damage
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 6132452216865615946, guid: ca3a5cc4153263d49b22e13c008c61db, type: 3}
       propertyPath: m_Name
       value: Axe1H_Epic Variant
