@@ -7,7 +7,7 @@ public class EnemyDamage : MonoBehaviour
     private float lastAttackTime;
 
     // This runs when the Enemy touches something physically
-    void OnCollisionStay(Collision collision)
+    void OnTriggerStay(Collider collision)
     {
         // 1. Check if we touched the Player
         if (collision.gameObject.CompareTag("Player"))
@@ -23,6 +23,10 @@ public class EnemyDamage : MonoBehaviour
 
     void AttackPlayer(GameObject player)
     {
+        // PlayerHealth for player
+        PlayerHealth health = player.GetComponent<PlayerHealth>();
+        health.TakeDamage(damageToDeal);
+
         // For now, we just print to console. 
         // Later, you will call: player.GetComponent<PlayerHealth>().TakeDamage(10);
         Debug.Log("Ouch! Player hit for " + damageToDeal + " damage!");

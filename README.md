@@ -19,9 +19,10 @@ People who are into RPG horro survival games.
 
 General goals for each person:
 Steph
- - Mapping (cemetery and abandoned hospital
+ - Mapping (cemetery and abandoned hospital)
  - Menu connecting play and quit buttons to go to specific scenes
- - Add Weapons/items inside map to pick up; maybe make an inventory window so player can choose from
+ - Add Weapons
+ - Player animation
    
 Eric
  - Enemy development and movements
@@ -30,6 +31,8 @@ Eric
 Julian
  - Player development and movement script.
  - full animation for main player.
+ - Menu options/design
+ - Audio
 
 
 
