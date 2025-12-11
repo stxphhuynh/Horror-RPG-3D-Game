@@ -45,6 +45,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animator;
 
+    // audio for picking weapon
+    public AudioSource pickWeapon;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -158,6 +161,7 @@ public class PlayerMovement : MonoBehaviour
             if (currentWeapon == null) { return; }
             animator.SetTrigger("Attack");
             currentWeapon.ResetSwing();
+            currentWeapon.PlaySwing();
             StartCoroutine(EnableWeaponHitbox());
         }
 
@@ -167,6 +171,7 @@ public class PlayerMovement : MonoBehaviour
             //if (currentWeapon == null) { return; };
             animator.SetTrigger("DownAttack");
             currentWeapon.ResetSwing();
+            currentWeapon.PlaySwing();
             StartCoroutine(EnableWeaponHitbox());
         }
         // ---- CAMERA LOOK ----
@@ -205,5 +210,7 @@ public class PlayerMovement : MonoBehaviour
         currentWeapon = newWeapon;
         currentWeapon.gameObject.SetActive(true);
         currentWeapon.ResetSwing();
+
+        pickWeapon.Play();
     }
 }

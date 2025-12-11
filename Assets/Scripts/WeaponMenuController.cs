@@ -10,6 +10,8 @@ public class WeaponMenuController : MonoBehaviour
 
     public KeyCode toggleKey = KeyCode.I;
     // Start is called before the first frame update
+
+   
     void Start()
     {
         // hidden menu
@@ -37,5 +39,7 @@ public class WeaponMenuController : MonoBehaviour
             weapons[i].SetActive(i == index);
         }
         currentWeaponIndex = index;
+
+        
     }
 }
