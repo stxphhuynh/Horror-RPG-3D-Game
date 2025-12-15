@@ -106,29 +106,62 @@ public class PlayerMovement : MonoBehaviour
         Vector3 horizontalMove = new Vector3(moveDirection.x, 0f, moveDirection.z);
         float speed = horizontalMove.magnitude; // 0 = idle, >0 = moving
 
-        if (animator != null)
+      if (animator != null)
+{
+    animator.SetFloat("Speed", speed);
+
+    bool pressingW  = Input.GetKey(KeyCode.W);
+    bool pressingS  = Input.GetKey(KeyCode.S);
+    bool pressingA  = Input.GetKey(KeyCode.A);
+    bool pressingD  = Input.GetKey(KeyCode.D);
+    bool shiftHeld  = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+    bool isGrounded = characterController.isGrounded;
+
+    // Base values
+    bool runningForward = false;
+    bool walkingForward = false;
+    bool walkingBack    = false;
+    bool walkingLeft    = false;
+    bool walkingRight   = false;
+
+    if (isGrounded && canMove)
+    {
+        // PRIORITY: Forward > Back > Left > Right
+
+        if (pressingW)
         {
-            
-            animator.SetFloat("Speed", speed);
-
-            // ---- WALK / RUN ANIMATION LOGIC ----
-            bool pressingW  = Input.GetKey(KeyCode.W);
-            bool shiftHeld  = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-            bool isGrounded = characterController.isGrounded;
-
-            bool runningForward = pressingW && shiftHeld && isGrounded && canMove;
-            bool walkingForward = pressingW && !runningForward && isGrounded && canMove;
-
-            // Bool parameters in Animator:
-            // "isWalking"  (bool)
-            // "RunForward" (bool)
-            animator.SetBool("isWalking",  walkingForward);
-            animator.SetBool("RunForward", runningForward);
+            // Run vs walk
+            runningForward = shiftHeld;
+            walkingForward = !shiftHeld;
         }
+        else if (pressingS)
+        {
+            walkingBack = true;
+        }
+        else if (pressingA)
+        {
+            walkingLeft = true;
+        }
+        else if (pressingD)
+        {
+            walkingRight = true;
+        }
+    }
+
+    // Apply to Animator (only ONE of these will be true)
+    animator.SetBool("RunForward", runningForward);
+    animator.SetBool("isWalking",  walkingForward);
+    animator.SetBool("walkBack",   walkingBack);
+    animator.SetBool("leftS",      walkingLeft);
+    animator.SetBool("rightS",     walkingRight);
+    animator.SetBool("walkBack", walkingBack);                                // <= NEW
+}
+
 
         // ---- JUMP ----
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         {
+            animator.SetTrigger("Jump");
             moveDirection.y = jumpPower;
         }
         else
