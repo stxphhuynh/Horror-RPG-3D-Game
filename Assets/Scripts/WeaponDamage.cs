@@ -10,6 +10,12 @@ public class WeaponDamage : MonoBehaviour
     // to avoid hitting multiple times in one swing
     private bool hasHitThisSwing = false;
 
+    // Audio
+    public AudioSource swing;
+    public AudioSource hit;
+
+ 
+
     private void OnTriggerEnter(Collider other)
     {
         TryDealDamage(other);
@@ -31,6 +37,7 @@ public class WeaponDamage : MonoBehaviour
             Debug.Log("HIT " + other.name);
             enemy.TakeDamage(damage);
             hasHitThisSwing = true; // only one hit per swing
+            hit.Play();
         }
     }
 
@@ -39,5 +46,11 @@ public class WeaponDamage : MonoBehaviour
     {
         hasHitThisSwing = false;
     }
+
+    public void PlaySwing()
+    {
+        swing.Play();
+    }
+
 }
 
