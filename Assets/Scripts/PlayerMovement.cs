@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Forward and right directions based on player rotation
         Vector3 forward = transform.TransformDirection(Vector3.forward);
-        Vector3 right   = transform.TransformDirection(Vector3.right);
+        Vector3 right = transform.TransformDirection(Vector3.right);
 
         // ---- CROUCH ----
         bool isCrouching = Input.GetKey(KeyCode.LeftControl);
@@ -84,13 +84,13 @@ public class PlayerMovement : MonoBehaviour
 
         // Pick correct speed depending on crouch
         float curWalk = isCrouching ? crouchSpeed : walkSpeed;
-        float curRun  = isCrouching ? crouchSpeed : runSpeed;
+        float curRun = isCrouching ? crouchSpeed : runSpeed;
 
         // ---- RUNNING INPUT ----
         bool isRunningInput = Input.GetKey(KeyCode.LeftShift);
 
         // Movement input on vertical and horizontal axes
-        float inputVertical   = canMove ? Input.GetAxis("Vertical")   : 0f;
+        float inputVertical = canMove ? Input.GetAxis("Vertical") : 0f;
         float inputHorizontal = canMove ? Input.GetAxis("Horizontal") : 0f;
 
         float curSpeedX = (isRunningInput ? curRun : curWalk) * inputVertical;
@@ -106,56 +106,56 @@ public class PlayerMovement : MonoBehaviour
         Vector3 horizontalMove = new Vector3(moveDirection.x, 0f, moveDirection.z);
         float speed = horizontalMove.magnitude; // 0 = idle, >0 = moving
 
-      if (animator != null)
-{
-    animator.SetFloat("Speed", speed);
-
-    bool pressingW  = Input.GetKey(KeyCode.W);
-    bool pressingS  = Input.GetKey(KeyCode.S);
-    bool pressingA  = Input.GetKey(KeyCode.A);
-    bool pressingD  = Input.GetKey(KeyCode.D);
-    bool shiftHeld  = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-    bool isGrounded = characterController.isGrounded;
-
-    // Base values
-    bool runningForward = false;
-    bool walkingForward = false;
-    bool walkingBack    = false;
-    bool walkingLeft    = false;
-    bool walkingRight   = false;
-
-    if (isGrounded && canMove)
-    {
-        // PRIORITY: Forward > Back > Left > Right
-
-        if (pressingW)
+        if (animator != null)
         {
-            // Run vs walk
-            runningForward = shiftHeld;
-            walkingForward = !shiftHeld;
-        }
-        else if (pressingS)
-        {
-            walkingBack = true;
-        }
-        else if (pressingA)
-        {
-            walkingLeft = true;
-        }
-        else if (pressingD)
-        {
-            walkingRight = true;
-        }
-    }
+            animator.SetFloat("Speed", speed);
 
-    // Apply to Animator (only ONE of these will be true)
-    animator.SetBool("RunForward", runningForward);
-    animator.SetBool("isWalking",  walkingForward);
-    animator.SetBool("walkBack",   walkingBack);
-    animator.SetBool("leftS",      walkingLeft);
-    animator.SetBool("rightS",     walkingRight);
-    animator.SetBool("walkBack", walkingBack);                                // <= NEW
-}
+            bool pressingW = Input.GetKey(KeyCode.W);
+            bool pressingS = Input.GetKey(KeyCode.S);
+            bool pressingA = Input.GetKey(KeyCode.A);
+            bool pressingD = Input.GetKey(KeyCode.D);
+            bool shiftHeld = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            bool isGrounded = characterController.isGrounded;
+
+            // Base values
+            bool runningForward = false;
+            bool walkingForward = false;
+            bool walkingBack = false;
+            bool walkingLeft = false;
+            bool walkingRight = false;
+
+            if (isGrounded && canMove)
+            {
+                // PRIORITY: Forward > Back > Left > Right
+
+                if (pressingW)
+                {
+                    // Run vs walk
+                    runningForward = shiftHeld;
+                    walkingForward = !shiftHeld;
+                }
+                else if (pressingS)
+                {
+                    walkingBack = true;
+                }
+                else if (pressingA)
+                {
+                    walkingLeft = true;
+                }
+                else if (pressingD)
+                {
+                    walkingRight = true;
+                }
+            }
+
+            // Apply to Animator (only ONE of these will be true)
+            animator.SetBool("RunForward", runningForward);
+            animator.SetBool("isWalking", walkingForward);
+            animator.SetBool("walkBack", walkingBack);
+            animator.SetBool("leftS", walkingLeft);
+            animator.SetBool("rightS", walkingRight);
+            animator.SetBool("walkBack", walkingBack);                                // <= NEW
+        }
 
 
         // ---- JUMP ----
