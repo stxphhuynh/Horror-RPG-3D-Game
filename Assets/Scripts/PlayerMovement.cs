@@ -50,15 +50,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource pickWeapon;
 
 
-    // knockback settings
-    public float knockbackForce = 8f;
-    public float knockbackDuration = .2f;
-    public float knockbackHopHeight = .75f;
 
-    private Vector3 knockbackVector = Vector3.zero;
-    private float knockbackTimer = 0f;
-    private float knockbackElapsed = 0f;
-    private float knockbackTotal = 0f;
 
     void Start()
     {
@@ -187,24 +179,6 @@ public class PlayerMovement : MonoBehaviour
                 moveDirection.y -= gravity * Time.deltaTime;
             }
 
-            // <= NEW apply knockback
-            if (knockbackTimer > 0f)
-            {
-                knockbackElapsed += Time.deltaTime;
-                float t = (knockbackTotal > 0f) ? Mathf.Clamp01(knockbackElapsed / knockbackTotal) : 1f;
-                moveDirection += knockbackVector;
-                // cause hop in knock back
-                float hop = Mathf.Sin(t * Mathf.PI) * knockbackHopHeight;
-                moveDirection.y += hop;
-
-                knockbackTimer -= Time.deltaTime;
-                if (knockbackTimer < 0f)
-                {
-                    knockbackVector = Vector3.zero;
-                    knockbackElapsed = 0f;  
-                }
-            }
-
             // Move the player controller
             characterController.Move(moveDirection * Time.deltaTime);
 
@@ -279,15 +253,5 @@ public class PlayerMovement : MonoBehaviour
         pickWeapon.Play();
     }
 
-    // knockback
-    public void ApplyKnockback(Vector3 sourcePosition, float force, float duration)
-    {
-        Vector3 direction = (transform.position - sourcePosition).normalized;
-        direction.y = 0f;
 
-        knockbackVector = direction * force;
-        knockbackTimer = duration;
-        knockbackTotal = duration;
-        knockbackElapsed = 0f;
-    }
 }
