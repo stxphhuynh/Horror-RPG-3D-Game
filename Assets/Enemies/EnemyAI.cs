@@ -9,14 +9,16 @@ public class EnemyAI : MonoBehaviour
     public NavMeshAgent agent;
     public Animator animator;
     public Transform player;
-    public List<Transform> waypoints;
+
+    [Header("Waypoints (assigned at runtime)")]
+    public List<Transform> waypoints = new List<Transform>();
 
     [Header("Audio Setup")]
     public AudioSource audioSource;
     public AudioClip[] ambientGroans;
     public AudioClip attackScream;
 
-    [Header("Health Settings")] // NEW
+    [Header("Health Settings")]
     public int maxHealth = 100;
     private int currentHealth;
 
@@ -44,6 +46,7 @@ public class EnemyAI : MonoBehaviour
         currentHealth = maxHealth; // Initialize Health
 
         // Fail-safes
+        if (agent == null) agent = GetComponent<NavMeshAgent>();
         if (animator == null) animator = GetComponent<Animator>();
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
         if (player == null)
@@ -52,13 +55,23 @@ public class EnemyAI : MonoBehaviour
             if (p != null) player = p.transform;
         }
 
-        if (waypoints.Count > 0) agent.SetDestination(waypoints[0].position);
+        // Only patrol if we already have waypoints assigned
+        if (waypoints.Count > 0 && agent != null)
+        {
+            currentWaypointIndex = 0;
+            agent.SetDestination(waypoints[0].position);
+        }
+
         ScheduleNextGroan();
     }
 
     void Update()
     {
-     
+        // knockback logic
+        if (isKnockedBack)
+        {
+            return;
+        }
 
         // 1. RANDOM AMBIENT SOUNDS
         if (Time.time >= nextGroanTime)
@@ -68,11 +81,11 @@ public class EnemyAI : MonoBehaviour
         }
 
         // 2. MOVEMENT ANIMATION
-        bool isMoving = agent.velocity.magnitude > 0.1f && !agent.isStopped;
+        bool isMoving = agent != null && agent.velocity.magnitude > 0.1f && !agent.isStopped;
         animator.SetBool("isMoving", isMoving);
 
         // 3. LOGIC CHECK
-        if (player != null)
+        if (player != null && agent != null)
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
@@ -89,7 +102,8 @@ public class EnemyAI : MonoBehaviour
 
                     if (Time.time > lastAttackSoundTime + attackSoundCooldown)
                     {
-                        if (attackScream != null) audioSource.PlayOneShot(attackScream);
+                        if (attackScream != null && audioSource != null)
+                            audioSource.PlayOneShot(attackScream);
                         lastAttackSoundTime = Time.time;
                     }
                 }
@@ -119,8 +133,18 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    // --- NEW: SIMPLE DAMAGE SYSTEM ---
+    // called by WaveSpawner right after spawning
+    public void AssignWaypoints(Transform[] points)
+    {
+        if (points == null || points.Length == 0 || agent == null)
+            return;
 
+        waypoints = new List<Transform>(points);
+        currentWaypointIndex = 0;
+        agent.SetDestination(waypoints[0].position);
+    }
+
+    // --- DAMAGE SYSTEM ---
     public void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount;
@@ -134,11 +158,9 @@ public class EnemyAI : MonoBehaviour
 
     void Die()
     {
-        // Instantly remove the enemy from the game
         Destroy(gameObject);
     }
 
-    // TEST TOOL: Click the enemy to deal damage
     void OnMouseDown()
     {
         TakeDamage(20);
@@ -161,6 +183,8 @@ public class EnemyAI : MonoBehaviour
 
     void LookAtPlayer()
     {
+        if (player == null) return;
+
         Vector3 direction = (player.position - transform.position).normalized;
         direction.y = 0;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
@@ -171,25 +195,21 @@ public class EnemyAI : MonoBehaviour
     {
         if (isKnockedBack) return;
         StartCoroutine(KnockbackRoutine(sourcePosition, forceOverride, durationOverride));
-
     }
-
 
     private IEnumerator KnockbackRoutine(Vector3 sourcePosition, float forceOverride, float durationOverride)
     {
         isKnockedBack = true;
 
-        float distance = (forceOverride > 0f) ? forceOverride : knockbackForce;   // treat force as distance now
+        float distance = (forceOverride > 0f) ? forceOverride : knockbackForce;
         float duration = (durationOverride > 0f) ? durationOverride : knockbackDuration;
 
-        // Direction away from the hit
         Vector3 direction = (transform.position - sourcePosition).normalized;
         direction.y = 0f;
 
         Vector3 startPos = transform.position;
         Vector3 endPos = startPos + direction * distance;
 
-        // Stop agent movement during knockback
         bool useAgent = (agent != null && agent.isOnNavMesh);
         bool prevStopped = useAgent ? agent.isStopped : false;
         if (useAgent) agent.isStopped = true;
@@ -200,15 +220,12 @@ public class EnemyAI : MonoBehaviour
             t += Time.deltaTime;
             float lerp = Mathf.Clamp01(t / duration);
 
-            // backward motion
             Vector3 pos = Vector3.Lerp(startPos, endPos, lerp);
-
-            // small arc up & down so it’s visible
-            float height = Mathf.Sin(lerp * Mathf.PI) * 0.5f;   // 0.5 = jump height
+            float height = Mathf.Sin(lerp * Mathf.PI) * 0.5f;
             pos.y += height;
 
             if (useAgent)
-                agent.Warp(pos);        // instantly place agent on NavMesh
+                agent.Warp(pos);
             else
                 transform.position = pos;
 
