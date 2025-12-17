@@ -383,6 +383,74 @@ Transform:
   - {fileID: 6182247575231636678}
   m_Father: {fileID: 3466363833108831763}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1498958850190723436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6970358479052691748}
+  - component: {fileID: 6042493626878217294}
+  - component: {fileID: 6207387768043776464}
+  m_Layer: 0
+  m_Name: hitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6970358479052691748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498958850190723436}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1506058795496326755}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6042493626878217294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498958850190723436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d02f8dfcf76efd40ae812cb03bace29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageToDeal: 10
+  attackCooldown: 1
+--- !u!135 &6207387768043776464
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498958850190723436}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 3
+  m_Center: {x: 0, y: 6, z: 0}
 --- !u!1 &1847219277522333985
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,12 +853,11 @@ GameObject:
   - component: {fileID: 5042844225760944563}
   - component: {fileID: 7139749666719635542}
   - component: {fileID: 4907732365095748539}
-  - component: {fileID: 2342076403791751743}
   - component: {fileID: -3142251270974414309}
   - component: {fileID: -8468747510207726712}
   m_Layer: 0
   m_Name: Zombie
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -805,10 +872,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5923261938750059587}
+  - {fileID: 6970358479052691748}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1590602857347229035
@@ -906,11 +974,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6805e35346c2b734793a78fc9fa0c619, type: 3}
   - {fileID: 8300000, guid: 3bc078779708b9443bec8de12d3f0421, type: 3}
   attackScream: {fileID: 8300000, guid: e47292853eb52e04085fc8d0063e890a, type: 3}
-  detectionRange: 50
-  attackRange: 4
+  maxHealth: 100
+  detectionRange: 10
+  attackRange: 2.2
   chaseSpeed: 5
   patrolSpeed: 1
-  attackSoundCooldown: 2
+  attackSoundCooldown: 1.5
+  knockbackForce: 5
+  knockbackDuration: 0.1
 --- !u!114 &4907732365095748539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -925,20 +996,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
---- !u!114 &2342076403791751743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3473221189472846420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d02f8dfcf76efd40ae812cb03bace29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageToDeal: 10
-  attackCooldown: 1
 --- !u!95 &-3142251270974414309
 Animator:
   serializedVersion: 5
