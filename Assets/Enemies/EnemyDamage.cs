@@ -9,35 +9,67 @@ public class EnemyDamage : MonoBehaviour
     // This runs when the Enemy touches something physically
 
 
-    private void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        enemyAI = GetComponentInParent<EnemyAI>();
+        TryDealDamage(other);
     }
-    void OnTriggerStay(Collider collision)
+
+    private void OnTriggerStay(Collider other)
     {
-        // 1. Check if we touched the Player
-        if (collision.gameObject.CompareTag("Player"))
+        TryDealDamage(other);
+    }
+
+    private void TryDealDamage(Collider other)
+    {
+        // Only damage the Player
+        if (!other.CompareTag("Player"))
+            return;
+
+        // Enforce hit cooldown
+        if (Time.time < lastAttackTime + attackCooldown)
+            return;
+
+        // Damage the player
+        PlayerHealth health = other.GetComponent<PlayerHealth>();
+        if (health != null)
         {
-            //if (enemyAI == null || !enemyAI.IsAttackingState) return;
-            // 2. Check Cooldown (Don't hit 60 times a second)
-            if (Time.time > lastAttackTime + attackCooldown)
-            {
-                AttackPlayer(collision.gameObject);
-                lastAttackTime = Time.time;
-            }
+            health.TakeDamage(damageToDeal);
+            lastAttackTime = Time.time;
+
+            Debug.Log($"Enemy hit player for {damageToDeal} damage");
         }
     }
 
-    void AttackPlayer(GameObject player)
-    {
-        // PlayerHealth for player
-        PlayerHealth health = player.GetComponent<PlayerHealth>();
-        health.TakeDamage(damageToDeal);
+
+    //private void Start()
+    //{
+    //    enemyAI = GetComponentInParent<EnemyAI>();
+    //}
+    //void OnTriggerStay(Collider collision)
+    //{
+    //    // 1. Check if we touched the Player
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+
+    //        // 2. Check Cooldown (Don't hit 60 times a second)
+    //        if (Time.time > lastAttackTime + attackCooldown)
+    //        {
+    //            AttackPlayer(collision.gameObject);
+    //            lastAttackTime = Time.time;
+    //        }
+    //    }
+    //}
+
+    //void AttackPlayer(GameObject player)
+    //{
+    //    // PlayerHealth for player
+    //    PlayerHealth health = player.GetComponent<PlayerHealth>();
+    //    health.TakeDamage(damageToDeal);
 
 
 
-        // For now, we just print to console. 
-        // Later, you will call: player.GetComponent<PlayerHealth>().TakeDamage(10);
-        Debug.Log("Ouch! Player hit for " + damageToDeal + " damage!");
-    }
+    //    // For now, we just print to console. 
+    //    // Later, you will call: player.GetComponent<PlayerHealth>().TakeDamage(10);
+    //    Debug.Log("Ouch! Player hit for " + damageToDeal + " damage!");
+    //}
 }
