@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -47,6 +48,17 @@ public class PlayerMovement : MonoBehaviour
 
     // audio for picking weapon
     public AudioSource pickWeapon;
+
+
+    // knockback settings
+    public float knockbackForce = 8f;
+    public float knockbackDuration = .2f;
+    public float knockbackHopHeight = .75f;
+
+    private Vector3 knockbackVector = Vector3.zero;
+    private float knockbackTimer = 0f;
+    private float knockbackElapsed = 0f;
+    private float knockbackTotal = 0f;
 
     void Start()
     {
@@ -154,74 +166,94 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("walkBack", walkingBack);
             animator.SetBool("leftS", walkingLeft);
             animator.SetBool("rightS", walkingRight);
-            animator.SetBool("walkBack", walkingBack);                                // <= NEW
+            animator.SetBool("walkBack", walkingBack);
+
+
+
+            // ---- JUMP ----
+            if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
+            {
+                animator.SetTrigger("Jump");
+                moveDirection.y = jumpPower;
+            }
+            else
+            {
+                moveDirection.y = movementDirectionY;
+            }
+
+            // Apply gravity if not on ground
+            if (!characterController.isGrounded)
+            {
+                moveDirection.y -= gravity * Time.deltaTime;
+            }
+
+            // <= NEW apply knockback
+            if (knockbackTimer > 0f)
+            {
+                knockbackElapsed = Time.deltaTime;
+                float t = (knockbackTotal > 0f) ? Mathf.Clamp01(knockbackElapsed / knockbackTotal) : 1f;
+                moveDirection += knockbackVector;
+                // cause hop in knock back
+                float hop = Mathf.Sin(t * Mathf.PI) * knockbackHopHeight;
+                moveDirection.y += hop;
+
+                knockbackTimer -= Time.deltaTime;
+                if (knockbackTimer < 0f)
+                {
+                    knockbackVector = Vector3.zero;
+                    knockbackElapsed = 0f;  
+                }
+            }
+
+            // Move the player controller
+            characterController.Move(moveDirection * Time.deltaTime);
+
+            // weapon switching
+            if (Input.GetKeyDown(KeyCode.Alpha1))   // key "1"
+            {
+                EquipWeapon(mace);   // mace
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))   // key "2"
+            {
+                EquipWeapon(axe);   // axe
+            }
+
+            // Attack
+            if (Input.GetMouseButtonDown(0))    //leftClick
+            {
+                if (currentWeapon == null) { return; }
+                animator.SetTrigger("Attack");
+                currentWeapon.ResetSwing();
+                currentWeapon.PlaySwing();
+                StartCoroutine(EnableWeaponHitbox());
+            }
+
+            // Downward Attack
+            if (Input.GetMouseButtonDown(1))
+            {
+                //if (currentWeapon == null) { return; };
+                animator.SetTrigger("DownAttack");
+                currentWeapon.ResetSwing();
+                currentWeapon.PlaySwing();
+                StartCoroutine(EnableWeaponHitbox());
+            }
+            // ---- CAMERA LOOK ----
+            if (canMove)
+            {
+                // Vertical camera rotation (up/down)
+                rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+
+                // Clamp to limit look angle
+                rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+
+                // Apply vertical rotation to camera
+                playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+
+                // Horizontal rotation (turning left/right)
+                transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+            }
         }
-
-
-        // ---- JUMP ----
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
-        {
-            animator.SetTrigger("Jump");
-            moveDirection.y = jumpPower;
-        }
-        else
-        {
-            moveDirection.y = movementDirectionY;
-        }
-
-        // Apply gravity if not on ground
-        if (!characterController.isGrounded)
-        {
-            moveDirection.y -= gravity * Time.deltaTime;
-        }
-
-        // Move the player controller
-        characterController.Move(moveDirection * Time.deltaTime);
-
-        // weapon switching
-        if (Input.GetKeyDown(KeyCode.Alpha1))   // key "1"
-        {
-            EquipWeapon(mace);   // mace
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))   // key "2"
-        {
-            EquipWeapon(axe);   // axe
-        }
-
-        // Attack
-        if (Input.GetMouseButtonDown(0))    //leftClick
-        {
-            if (currentWeapon == null) { return; }
-            animator.SetTrigger("Attack");
-            currentWeapon.ResetSwing();
-            currentWeapon.PlaySwing();
-            StartCoroutine(EnableWeaponHitbox());
-        }
-
-        // Downward Attack
-        if (Input.GetMouseButtonDown(1))
-        {
-            //if (currentWeapon == null) { return; };
-            animator.SetTrigger("DownAttack");
-            currentWeapon.ResetSwing();
-            currentWeapon.PlaySwing();
-            StartCoroutine(EnableWeaponHitbox());
-        }
-        // ---- CAMERA LOOK ----
-        if (canMove)
-        {
-            // Vertical camera rotation (up/down)
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-
-            // Clamp to limit look angle
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-
-            // Apply vertical rotation to camera
-            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-
-            // Horizontal rotation (turning left/right)
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
-        }
+    
     }
 
     private IEnumerator EnableWeaponHitbox()
@@ -245,5 +277,17 @@ public class PlayerMovement : MonoBehaviour
         currentWeapon.ResetSwing();
 
         pickWeapon.Play();
+    }
+
+    // knockback
+    public void ApplyKnockback(Vector3 sourcePosition, float force, float duration)
+    {
+        Vector3 direction = (transform.position - sourcePosition).normalized;
+        direction.y = 0f;
+
+        knockbackVector = direction * force;
+        knockbackTimer = duration;
+        knockbackTotal = duration;
+        knockbackElapsed = 0f;
     }
 }

@@ -27,6 +27,14 @@ public class EnemyDamage : MonoBehaviour
         PlayerHealth health = player.GetComponent<PlayerHealth>();
         health.TakeDamage(damageToDeal);
 
+        PlayerMovement movement = player.GetComponent<PlayerMovement>();
+        if (movement != null)
+        {
+            float knockbackForce = movement.knockbackForce;
+            float knockbackDuration = movement.knockbackDuration;
+            movement.ApplyKnockback(transform.position, knockbackForce, knockbackDuration);
+        }
+
         // For now, we just print to console. 
         // Later, you will call: player.GetComponent<PlayerHealth>().TakeDamage(10);
         Debug.Log("Ouch! Player hit for " + damageToDeal + " damage!");
