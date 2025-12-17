@@ -58,10 +58,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        // knockback logic
-        if (isKnockedBack) {
-            return;
-        }
+     
 
         // 1. RANDOM AMBIENT SOUNDS
         if (Time.time >= nextGroanTime)
