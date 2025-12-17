@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
+using System.Collections;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -32,6 +33,12 @@ public class EnemyAI : MonoBehaviour
 
     private int currentWaypointIndex = 0;
 
+    [Header("Knockback Settings")]
+    public float knockbackForce = 5f;
+    public float knockbackDuration = .2f;
+
+    private bool isKnockedBack = false;
+
     void Start()
     {
         currentHealth = maxHealth; // Initialize Health
@@ -51,6 +58,11 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        // knockback logic
+        if (isKnockedBack) {
+            return;
+        }
+
         // 1. RANDOM AMBIENT SOUNDS
         if (Time.time >= nextGroanTime)
         {
@@ -156,5 +168,59 @@ public class EnemyAI : MonoBehaviour
         direction.y = 0;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+    }
+
+    public void ApplyKnockBack(Vector3 sourcePosition, float forceOverride = -1f, float durationOverride = -1f)
+    {
+        if (isKnockedBack) return;
+        StartCoroutine(KnockbackRoutine(sourcePosition, forceOverride, durationOverride));
+
+    }
+
+
+    private IEnumerator KnockbackRoutine(Vector3 sourcePosition, float forceOverride, float durationOverride)
+    {
+        isKnockedBack = true;
+
+        float distance = (forceOverride > 0f) ? forceOverride : knockbackForce;   // treat force as distance now
+        float duration = (durationOverride > 0f) ? durationOverride : knockbackDuration;
+
+        // Direction away from the hit
+        Vector3 direction = (transform.position - sourcePosition).normalized;
+        direction.y = 0f;
+
+        Vector3 startPos = transform.position;
+        Vector3 endPos = startPos + direction * distance;
+
+        // Stop agent movement during knockback
+        bool useAgent = (agent != null && agent.isOnNavMesh);
+        bool prevStopped = useAgent ? agent.isStopped : false;
+        if (useAgent) agent.isStopped = true;
+
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float lerp = Mathf.Clamp01(t / duration);
+
+            // backward motion
+            Vector3 pos = Vector3.Lerp(startPos, endPos, lerp);
+
+            // small arc up & down so it’s visible
+            float height = Mathf.Sin(lerp * Mathf.PI) * 0.5f;   // 0.5 = jump height
+            pos.y += height;
+
+            if (useAgent)
+                agent.Warp(pos);        // instantly place agent on NavMesh
+            else
+                transform.position = pos;
+
+            yield return null;
+        }
+
+        if (useAgent)
+            agent.isStopped = prevStopped;
+
+        isKnockedBack = false;
     }
 }
