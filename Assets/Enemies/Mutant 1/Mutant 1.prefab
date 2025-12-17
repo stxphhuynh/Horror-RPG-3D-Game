@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -4517549942764120375}
   - component: {fileID: 6414298307117551989}
   - component: {fileID: -7851775219855790302}
+  - component: {fileID: 7736994867459138867}
   m_Layer: 0
   m_Name: Mutant 1
   m_TagString: Enemy
@@ -72,7 +73,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0.35
+  m_Speed: 1
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 100
@@ -171,7 +172,7 @@ MonoBehaviour:
   attackScream: {fileID: 8300000, guid: ca8c6535f43192045956c847ba9bdb29, type: 3}
   maxHealth: 100
   detectionRange: 15
-  attackRange: 2
+  attackRange: 3
   chaseSpeed: 3
   patrolSpeed: 2
   attackSoundCooldown: 1.5
@@ -273,6 +274,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7736994867459138867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121219498180895324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ee577a1cb528b40b53d70e259946f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitboxDamage: {fileID: 5601828020143244803}
 --- !u!1 &4749082531506728161
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +355,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageToDeal: 15
   attackCooldown: 1
+  damageWindowOpen: 0
+  hasHitAttack: 0
 --- !u!1001 &6533421459196550093
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -393,7 +409,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pumpkinhulk L Shaw
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: a2a7be25a2dbbd444aa7fd0bf5ab4512, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1852576806548013000, guid: a2a7be25a2dbbd444aa7fd0bf5ab4512, type: 3}

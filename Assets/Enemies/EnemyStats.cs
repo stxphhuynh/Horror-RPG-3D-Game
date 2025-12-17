@@ -30,10 +30,4 @@ public class EnemyStats : MonoBehaviour
         // Optional: Play death sound
         Destroy(gameObject); // Removes the enemy from the game
     }
-
-    // DEBUGGING TOOL: This lets you click the enemy to test damage
-    //void OnMouseDown()
-    //{
-    //    TakeDamage(20);
-    //}
 }
