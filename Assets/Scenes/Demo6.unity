@@ -25673,6 +25673,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3612158626972825733, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
+      propertyPath: m_Pitch
+      value: 1.4
+      objectReference: {fileID: 0}
     - target: {fileID: 3800726051400979594, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
       propertyPath: hit
       value: 
