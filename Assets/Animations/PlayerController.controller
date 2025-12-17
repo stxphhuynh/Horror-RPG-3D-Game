@@ -812,7 +812,7 @@ AnimatorStateMachine:
     m_Position: {x: -90, y: 780, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3461639694074788599}
-    m_Position: {x: 563.6277, y: 943.927, z: 0}
+    m_Position: {x: 500, y: 760, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8692146709682088865}
     m_Position: {x: 290, y: -230, z: 0}
@@ -836,7 +836,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: RunForward
-  m_Speed: 1.4
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -904181459867733139}
@@ -856,7 +856,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 14ddc461da41a46a59ac7d7a897f899c, type: 2}
+  m_Motion: {fileID: 7400000, guid: 9e67c60bc5ba34d009a5883ea524729e, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1204,7 +1204,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Jump
-  m_Speed: 1
+  m_Speed: 1.1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5298225644197398988}
@@ -1390,7 +1390,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: walkBack
-  m_Speed: 1.3
+  m_Speed: 1.4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -9118794538921339882}
