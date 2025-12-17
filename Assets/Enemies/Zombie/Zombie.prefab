@@ -392,8 +392,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6970358479052691748}
-  - component: {fileID: 6042493626878217294}
   - component: {fileID: 6207387768043776464}
+  - component: {fileID: 7072098256868926882}
   m_Layer: 0
   m_Name: hitbox
   m_TagString: Untagged
@@ -416,20 +416,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6579756221671869747}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6042493626878217294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498958850190723436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d02f8dfcf76efd40ae812cb03bace29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageToDeal: 5
-  attackCooldown: 1
 --- !u!135 &6207387768043776464
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -449,8 +435,24 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.8
+  m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7072098256868926882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498958850190723436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d02f8dfcf76efd40ae812cb03bace29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageToDeal: 5
+  attackCooldown: 1
+  damageWindowOpen: 0
+  hasHitAttack: 0
 --- !u!1 &1847219277522333985
 GameObject:
   m_ObjectHideFlags: 0
@@ -855,6 +857,7 @@ GameObject:
   - component: {fileID: 4907732365095748539}
   - component: {fileID: -3142251270974414309}
   - component: {fileID: -8468747510207726712}
+  - component: {fileID: 6628001938983822318}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Enemy
@@ -1112,6 +1115,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6628001938983822318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3473221189472846420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ee577a1cb528b40b53d70e259946f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitboxDamage: {fileID: 7072098256868926882}
 --- !u!1 &3483803113244625385
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,7 +2121,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5923261938750059587}
-  - component: {fileID: 347775035013082681}
   m_Layer: 0
   m_Name: Ch10_nonPBR
   m_TagString: Untagged
@@ -2130,27 +2145,6 @@ Transform:
   - {fileID: 7958467492032074677}
   m_Father: {fileID: 1506058795496326755}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &347775035013082681
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6447034761276403449}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: f2d6126a842973b449822dc5181d1686, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6521109207579968024
 GameObject:
   m_ObjectHideFlags: 0

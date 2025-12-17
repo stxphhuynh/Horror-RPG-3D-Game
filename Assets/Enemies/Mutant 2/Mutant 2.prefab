@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3162951450494581068}
   - component: {fileID: 8986649054611476266}
-  - component: {fileID: 3327523118552425333}
+  - component: {fileID: 3746964475581450003}
   m_Layer: 0
   m_Name: Hitbox
   m_TagString: Untagged
@@ -52,9 +52,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3327523118552425333
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0.27}
+--- !u!114 &3746964475581450003
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,6 +68,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageToDeal: 10
   attackCooldown: 1
+  damageWindowOpen: 0
+  hasHitAttack: 0
 --- !u!1 &4627112798699760234
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,6 +86,7 @@ GameObject:
   - component: {fileID: 4189617486254048822}
   - component: {fileID: 8240580838016626180}
   - component: {fileID: -236061795977758958}
+  - component: {fileID: 2914159222659088875}
   m_Layer: 0
   m_Name: Mutant 2
   m_TagString: Enemy
@@ -204,7 +207,7 @@ MonoBehaviour:
   attackScream: {fileID: 8300000, guid: a74ca36f576f7354b939521192bb5c3f, type: 3}
   maxHealth: 100
   detectionRange: 15
-  attackRange: 2
+  attackRange: 2.2
   chaseSpeed: 3
   patrolSpeed: 2
   attackSoundCooldown: 1.5
@@ -341,6 +344,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2914159222659088875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4627112798699760234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ee577a1cb528b40b53d70e259946f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitboxDamage: {fileID: 3746964475581450003}
 --- !u!1001 &2044300327829795970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -393,7 +409,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Parasite L Starkie
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5866666021909216657, guid: 29f8c7f4e71ba524a8cfb0c49d34dedf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 29f8c7f4e71ba524a8cfb0c49d34dedf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1852576806548013000, guid: 29f8c7f4e71ba524a8cfb0c49d34dedf, type: 3}
