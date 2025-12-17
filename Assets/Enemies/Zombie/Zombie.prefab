@@ -790,7 +790,7 @@ GameObject:
   - component: {fileID: -8468747510207726712}
   m_Layer: 0
   m_Name: Zombie
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -805,7 +805,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5923261938750059587}
@@ -906,6 +906,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6805e35346c2b734793a78fc9fa0c619, type: 3}
   - {fileID: 8300000, guid: 3bc078779708b9443bec8de12d3f0421, type: 3}
   attackScream: {fileID: 8300000, guid: e47292853eb52e04085fc8d0063e890a, type: 3}
+  maxHealth: 100
   detectionRange: 50
   attackRange: 4
   chaseSpeed: 5

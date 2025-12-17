@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -7851775219855790302}
   m_Layer: 0
   m_Name: Mutant 1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -37.66}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6710883852647037990}
@@ -184,6 +184,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7ecfde06bfac37948b316b80185b04d0, type: 3}
   - {fileID: 8300000, guid: ada8f093554041945b0f7b0ddae78daa, type: 3}
   attackScream: {fileID: 8300000, guid: ca8c6535f43192045956c847ba9bdb29, type: 3}
+  maxHealth: 100
   detectionRange: 50
   attackRange: 4
   chaseSpeed: 10

@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -236061795977758958}
   m_Layer: 0
   m_Name: Mutant 2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2005343373266719593}
@@ -135,6 +135,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b32d84d302e04984e8051528f4fb39c3, type: 3}
   - {fileID: 8300000, guid: 39a78760dcefadd4cadf6ba1edb7d4eb, type: 3}
   attackScream: {fileID: 8300000, guid: a74ca36f576f7354b939521192bb5c3f, type: 3}
+  maxHealth: 100
   detectionRange: 50
   attackRange: 4
   chaseSpeed: 15
