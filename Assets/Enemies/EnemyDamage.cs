@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
-    public int damageToDeal = 10;
+    public int damageToDeal = 15;
     public float attackCooldown = 1.0f; // Seconds between hits
     private float lastAttackTime;
     private EnemyAI enemyAI;

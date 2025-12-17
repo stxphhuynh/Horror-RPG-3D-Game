@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d02f8dfcf76efd40ae812cb03bace29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageToDeal: 10
+  damageToDeal: 5
   attackCooldown: 1
 --- !u!135 &6207387768043776464
 SphereCollider:
@@ -975,7 +975,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3bc078779708b9443bec8de12d3f0421, type: 3}
   attackScream: {fileID: 8300000, guid: e47292853eb52e04085fc8d0063e890a, type: 3}
   maxHealth: 100
-  detectionRange: 10
+  detectionRange: 15
   attackRange: 2.2
   chaseSpeed: 5
   patrolSpeed: 1
