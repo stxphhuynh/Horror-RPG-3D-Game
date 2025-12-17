@@ -14,7 +14,10 @@ public class WeaponDamage : MonoBehaviour
     public AudioSource swing;
     public AudioSource hit;
 
- 
+    // knockback from weapon
+    public float knockbackForce = 5f;
+    public float knockbackDuration = .2f;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -28,9 +31,11 @@ public class WeaponDamage : MonoBehaviour
 
     private void TryDealDamage(Collider other)
     {
+        
         if (!canDealDamage || hasHitThisSwing)
             return;
 
+        // deal damage to enemy
         EnemyStats enemy = other.GetComponentInParent<EnemyStats>();
         if (enemy != null)
         {
@@ -38,6 +43,13 @@ public class WeaponDamage : MonoBehaviour
             enemy.TakeDamage(damage);
             hasHitThisSwing = true; // only one hit per swing
             hit.Play();
+        }
+        // knockback to enemy
+        EnemyAI enemyAI = other.GetComponentInParent<EnemyAI>();
+        if (enemyAI != null) {
+            Debug.Log("KNOCKBACK " + enemyAI.name);
+            enemyAI.ApplyKnockBack(transform.position, knockbackForce, knockbackDuration);
+        
         }
     }
 
