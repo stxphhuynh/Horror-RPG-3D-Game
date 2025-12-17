@@ -1,92 +1,160 @@
 using UnityEngine;
-using UnityEngine.AI; // Required for the NavMeshAgent
+using UnityEngine.AI;
 using System.Collections.Generic;
 
 public class EnemyAI : MonoBehaviour
 {
     [Header("Setup")]
     public NavMeshAgent agent;
+    public Animator animator;
     public Transform player;
     public List<Transform> waypoints;
 
-    [Header("Settings")]
-    public float detectionRange = 10f; // How far the enemy can "see"
+    [Header("Audio Setup")]
+    public AudioSource audioSource;
+    public AudioClip[] ambientGroans;
+    public AudioClip attackScream;
+
+    [Header("Health Settings")] // NEW
+    public int maxHealth = 100;
+    private int currentHealth;
+
+    [Header("AI Settings")]
+    public float detectionRange = 10f;
+    public float attackRange = 2.0f;
     public float chaseSpeed = 5f;
     public float patrolSpeed = 3f;
 
-    // State Machine
-    private enum State { Patrolling, Chasing }
-    private State currentState;
+    // Timers
+    private float nextGroanTime;
+    private float lastAttackSoundTime;
+    public float attackSoundCooldown = 1.5f;
+
     private int currentWaypointIndex = 0;
 
     void Start()
     {
-        // Initialize state
-        currentState = State.Patrolling;
-        agent.speed = patrolSpeed;
+        currentHealth = maxHealth; // Initialize Health
 
-        // Move to first waypoint immediately
-        if (waypoints.Count > 0)
+        // Fail-safes
+        if (animator == null) animator = GetComponent<Animator>();
+        if (audioSource == null) audioSource = GetComponent<AudioSource>();
+        if (player == null)
         {
-            agent.SetDestination(waypoints[0].position);
+            GameObject p = GameObject.FindGameObjectWithTag("Player");
+            if (p != null) player = p.transform;
         }
+
+        if (waypoints.Count > 0) agent.SetDestination(waypoints[0].position);
+        ScheduleNextGroan();
     }
 
     void Update()
     {
-        switch (currentState)
+        // 1. RANDOM AMBIENT SOUNDS
+        if (Time.time >= nextGroanTime)
         {
-            case State.Patrolling:
-                PatrolBehavior();
-                break;
-            case State.Chasing:
-                ChaseBehavior();
-                break;
+            PlayRandomGroan();
+            ScheduleNextGroan();
+        }
+
+        // 2. MOVEMENT ANIMATION
+        bool isMoving = agent.velocity.magnitude > 0.1f && !agent.isStopped;
+        animator.SetBool("isMoving", isMoving);
+
+        // 3. LOGIC CHECK
+        if (player != null)
+        {
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+            if (distanceToPlayer < detectionRange)
+            {
+                animator.SetBool("isChasing", true);
+
+                if (distanceToPlayer <= attackRange)
+                {
+                    // >>> ATTACK <<<
+                    agent.isStopped = true;
+                    animator.SetBool("isAttacking", true);
+                    LookAtPlayer();
+
+                    if (Time.time > lastAttackSoundTime + attackSoundCooldown)
+                    {
+                        if (attackScream != null) audioSource.PlayOneShot(attackScream);
+                        lastAttackSoundTime = Time.time;
+                    }
+                }
+                else
+                {
+                    // >>> CHASE <<<
+                    agent.isStopped = false;
+                    animator.SetBool("isAttacking", false);
+                    agent.speed = chaseSpeed;
+                    agent.SetDestination(player.position);
+                }
+            }
+            else
+            {
+                // >>> PATROL <<<
+                animator.SetBool("isChasing", false);
+                animator.SetBool("isAttacking", false);
+                agent.isStopped = false;
+                agent.speed = patrolSpeed;
+
+                if (agent.remainingDistance < 0.5f && !agent.pathPending && waypoints.Count > 0)
+                {
+                    currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
+                    agent.SetDestination(waypoints[currentWaypointIndex].position);
+                }
+            }
         }
     }
 
-    void PatrolBehavior()
+    // --- NEW: SIMPLE DAMAGE SYSTEM ---
+
+    public void TakeDamage(int damageAmount)
     {
-        agent.speed = patrolSpeed;
+        currentHealth -= damageAmount;
+        Debug.Log("Enemy Health: " + currentHealth);
 
-        // 1. Check if we are close to the current waypoint
-        if (agent.remainingDistance < 0.5f && !agent.pathPending)
+        if (currentHealth <= 0)
         {
-            // Move to next waypoint
-            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
-            agent.SetDestination(waypoints[currentWaypointIndex].position);
-        }
-
-        // 2. Check for Player
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceToPlayer < detectionRange)
-        {
-            currentState = State.Chasing;
+            Die();
         }
     }
 
-    void ChaseBehavior()
+    void Die()
     {
-        agent.speed = chaseSpeed;
+        // Instantly remove the enemy from the game
+        Destroy(gameObject);
+    }
 
-        // 1. Move towards player
-        agent.SetDestination(player.position);
+    // TEST TOOL: Click the enemy to deal damage
+    void OnMouseDown()
+    {
+        TakeDamage(20);
+    }
 
-        // 2. Check if player escaped
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceToPlayer > detectionRange * 1.5f) // * 1.5f adds a buffer so it doesn't flicker
+    // --- HELPER FUNCTIONS ---
+    void PlayRandomGroan()
+    {
+        if (ambientGroans.Length > 0 && audioSource != null)
         {
-            // Go back to patrol
-            currentState = State.Patrolling;
-            // Resume moving to the last known waypoint
-            agent.SetDestination(waypoints[currentWaypointIndex].position);
+            AudioClip clip = ambientGroans[Random.Range(0, ambientGroans.Length)];
+            audioSource.PlayOneShot(clip);
         }
     }
 
-    // Visual Aid for debugging in the Scene View
-    void OnDrawGizmosSelected()
+    void ScheduleNextGroan()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
+        nextGroanTime = Time.time + Random.Range(5f, 15f);
+    }
+
+    void LookAtPlayer()
+    {
+        Vector3 direction = (player.position - transform.position).normalized;
+        direction.y = 0;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 }
