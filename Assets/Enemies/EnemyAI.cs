@@ -41,8 +41,6 @@ public class EnemyAI : MonoBehaviour
 
     private bool isKnockedBack = false;
 
-    private bool isAttackingState = false;
-    public bool IsAttackingState => isAttackingState;
     void Start()
     {
         currentHealth = maxHealth; // Initialize Health
@@ -69,7 +67,11 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-    
+        // knockback logic
+        if (isKnockedBack)
+        {
+            return;
+        }
 
         // 1. RANDOM AMBIENT SOUNDS
         if (Time.time >= nextGroanTime)
@@ -87,11 +89,6 @@ public class EnemyAI : MonoBehaviour
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            if (isAttackingState)
-            {
-                LookAtPlayer();
-                return;
-            }
             if (distanceToPlayer < detectionRange)
             {
                 animator.SetBool("isChasing", true);
@@ -99,24 +96,22 @@ public class EnemyAI : MonoBehaviour
                 if (distanceToPlayer <= attackRange)
                 {
                     // >>> ATTACK <<<
-                    //agent.isStopped = true;
-                    //animator.SetBool("isAttacking", true);
-                    //LookAtPlayer();
+                    agent.isStopped = true;
+                    animator.SetBool("isAttacking", true);
+                    LookAtPlayer();
 
-                    //if (Time.time > lastAttackSoundTime + attackSoundCooldown)
-                    //{
-                    //    if (attackScream != null && audioSource != null)
-                    //        audioSource.PlayOneShot(attackScream);
-                    //    lastAttackSoundTime = Time.time;
-                    //}
-                    StartCoroutine(AttackRoutine());
+                    if (Time.time > lastAttackSoundTime + attackSoundCooldown)
+                    {
+                        if (attackScream != null && audioSource != null)
+                            audioSource.PlayOneShot(attackScream);
+                        lastAttackSoundTime = Time.time;
+                    }
                 }
                 else
                 {
                     // >>> CHASE <<<
                     agent.isStopped = false;
                     animator.SetBool("isAttacking", false);
-                    
                     agent.speed = chaseSpeed;
                     agent.SetDestination(player.position);
                 }
@@ -241,34 +236,5 @@ public class EnemyAI : MonoBehaviour
             agent.isStopped = prevStopped;
 
         isKnockedBack = false;
-    }
-
-    private IEnumerator AttackRoutine()
-    {
-        if (isAttackingState) yield break;
-
-        isAttackingState = true;
-        agent.isStopped = true;
-        animator.SetBool("isChasing", false);
-        animator.SetBool("isAttacking", true);
-        LookAtPlayer();
-
-        // Optional: play attack sound once per attack
-        if (Time.time > lastAttackSoundTime + attackSoundCooldown)
-        {
-            if (attackScream != null && audioSource != null)
-                audioSource.PlayOneShot(attackScream);
-            lastAttackSoundTime = Time.time;
-        }
-
-        // Wait for the attack animation to play fully
-        // Set this to the real length of your attack anim
-        float attackAnimDuration = 0.9f;
-        yield return new WaitForSeconds(attackAnimDuration);
-
-        // End attack, go back to chase
-        animator.SetBool("isAttacking", false);
-        isAttackingState = false;
-        agent.isStopped = false;
     }
 }

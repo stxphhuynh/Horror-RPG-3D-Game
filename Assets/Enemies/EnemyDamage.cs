@@ -18,7 +18,7 @@ public class EnemyDamage : MonoBehaviour
         // 1. Check if we touched the Player
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (enemyAI == null || !enemyAI.IsAttackingState) return;
+            //if (enemyAI == null || !enemyAI.IsAttackingState) return;
             // 2. Check Cooldown (Don't hit 60 times a second)
             if (Time.time > lastAttackTime + attackCooldown)
             {
@@ -34,13 +34,7 @@ public class EnemyDamage : MonoBehaviour
         PlayerHealth health = player.GetComponent<PlayerHealth>();
         health.TakeDamage(damageToDeal);
 
-        PlayerMovement movement = player.GetComponent<PlayerMovement>();
-        if (movement != null)
-        {
-            float knockbackForce = movement.knockbackForce;
-            float knockbackDuration = movement.knockbackDuration;
-            movement.ApplyKnockback(transform.position, knockbackForce, knockbackDuration);
-        }
+
 
         // For now, we just print to console. 
         // Later, you will call: player.GetComponent<PlayerHealth>().TakeDamage(10);
