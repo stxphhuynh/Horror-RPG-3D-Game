@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
+    [Header("Waypoints")]
     public Transform[] mutantWaypoints;
+
+    [Header("Player")]
+    public PlayerHealth playerHealth;  
 
     [Header("Enemy Prefabs")]
     public GameObject mutant1Prefab;   // "Mutant 1" - big guy
@@ -88,6 +92,14 @@ public class WaveSpawner : MonoBehaviour
 
     void StartNextRound()
     {
+        // Heal the player AFTER each completed round
+        // (currentRound is the round we just finished)
+        if (currentRound > 0 && playerHealth != null)
+        {
+            playerHealth.Heal(30);
+            Debug.Log($"Healed player +20 HP after round {currentRound}. Current health: {playerHealth.CurrentHealth}");
+        }
+
         currentRound++;
         Debug.Log("Starting Round: " + currentRound);
 
@@ -139,7 +151,7 @@ public class WaveSpawner : MonoBehaviour
             Transform sp = spawnPoints[Random.Range(0, spawnPoints.Length)];
             GameObject obj = Instantiate(enemy, sp.position, sp.rotation);
 
-            // ✅ Assign waypoints to any enemy that uses EnemyAI
+            // Assign waypoints to any enemy that uses EnemyAI
             EnemyAI ai = obj.GetComponent<EnemyAI>();
             if (ai != null)
             {

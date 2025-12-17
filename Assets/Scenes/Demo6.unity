@@ -9928,6 +9928,7 @@ MonoBehaviour:
   - {fileID: 1771154833}
   - {fileID: 1637116504}
   - {fileID: 825842480}
+  playerHealth: {fileID: 712226083}
   mutant1Prefab: {fileID: 121219498180895324, guid: 7651981e04e34b344a0913bc90d3cefc, type: 3}
   mutant2Prefab: {fileID: 4627112798699760234, guid: 999c048c8fc77f14ba51d29064327ddd, type: 3}
   zombiePrefab: {fileID: 3473221189472846420, guid: 6f6376655c92db048a2c5c91ce9d1ebb, type: 3}
@@ -16929,6 +16930,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &712226083 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5731698414224608964, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
+  m_PrefabInstance: {fileID: 951099250}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712226069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18dd543e07f36491e9e580514ea86135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &720335197 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 780d55bf443a9c74d91bf1291263a77a, type: 3}
@@ -43865,15 +43877,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3042794715153358174, guid: a323634ff8428054f82ceada8635ce76, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.16
+      value: 21.38
       objectReference: {fileID: 0}
     - target: {fileID: 3042794715153358174, guid: a323634ff8428054f82ceada8635ce76, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.229601
+      value: 2.48
       objectReference: {fileID: 0}
     - target: {fileID: 3042794715153358174, guid: a323634ff8428054f82ceada8635ce76, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.18
+      value: -10.11
       objectReference: {fileID: 0}
     - target: {fileID: 3042794715153358174, guid: a323634ff8428054f82ceada8635ce76, type: 3}
       propertyPath: m_LocalRotation.w
