@@ -172,11 +172,11 @@ MonoBehaviour:
   attackScream: {fileID: 8300000, guid: ca8c6535f43192045956c847ba9bdb29, type: 3}
   maxHealth: 100
   detectionRange: 10
-  attackRange: 2.2
+  attackRange: 2
   chaseSpeed: 3
   patrolSpeed: 2
   attackSoundCooldown: 1.5
-  knockbackForce: 5
+  knockbackForce: 2
   knockbackDuration: 0.1
 --- !u!82 &-7851775219855790302
 AudioSource:
@@ -326,7 +326,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 4
+  m_Radius: 3
   m_Center: {x: 0, y: 6, z: 0}
 --- !u!114 &5601828020143244803
 MonoBehaviour:

@@ -27205,8 +27205,12 @@ PrefabInstance:
       value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 2394140988157511072, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
+      propertyPath: knockbackForce
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2394140988157511072, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
       propertyPath: knockbackHopHeight
-      value: 3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3302733350771853910, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
       propertyPath: m_Height
