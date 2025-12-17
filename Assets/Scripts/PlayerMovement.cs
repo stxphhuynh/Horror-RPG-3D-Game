@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
+//using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -190,7 +190,7 @@ public class PlayerMovement : MonoBehaviour
             // <= NEW apply knockback
             if (knockbackTimer > 0f)
             {
-                knockbackElapsed = Time.deltaTime;
+                knockbackElapsed += Time.deltaTime;
                 float t = (knockbackTotal > 0f) ? Mathf.Clamp01(knockbackElapsed / knockbackTotal) : 1f;
                 moveDirection += knockbackVector;
                 // cause hop in knock back
