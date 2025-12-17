@@ -340,7 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d02f8dfcf76efd40ae812cb03bace29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageToDeal: 10
+  damageToDeal: 15
   attackCooldown: 1
 --- !u!1001 &6533421459196550093
 PrefabInstance:
