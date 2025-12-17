@@ -52275,7 +52275,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.8, y: 57}
+  m_AnchoredPosition: {x: 2.8, y: 108.25}
   m_SizeDelta: {x: 684.6956, y: 171.1739}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1968053169
@@ -52309,12 +52309,14 @@ MonoBehaviour:
 
     Left/Right Click to attack
 
+    1 or 2 to switch weapons
 
-    Survive 5 waves of enemies
+
+    Survive
+    5 waves of enemies
 
 
-    Press
-    E to begin'
+    Press E to begin'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3019c3fa5c4fc4b94852a27a785201d7, type: 2}
   m_sharedMaterial: {fileID: 5670542695981239356, guid: 3019c3fa5c4fc4b94852a27a785201d7, type: 2}
