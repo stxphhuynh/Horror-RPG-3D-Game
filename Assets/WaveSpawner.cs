@@ -1,9 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
+    public Transform[] mutantWaypoints;
+
     [Header("Enemy Prefabs")]
     public GameObject mutant1Prefab;   // "Mutant 1" - big guy
     public GameObject mutant2Prefab;   // "Mutant 2" - medium
@@ -36,7 +38,7 @@ public class WaveSpawner : MonoBehaviour
     {
         // Gradual difficulty:
         // Round 1: super easy
-        // Round 2�4: slowly add more and tougher enemies
+        // Round 2–4: slowly add more and tougher enemies
 
         waves = new WaveConfig[]
         {
@@ -49,7 +51,6 @@ public class WaveSpawner : MonoBehaviour
             ),
 
             // Round 2: EASY
-            // Introduce 1 Mutant 1 and more zombies.
             new WaveConfig(
                 1,  // Mutant 1
                 1,  // Mutant 2
@@ -57,7 +58,6 @@ public class WaveSpawner : MonoBehaviour
             ),
 
             // Round 3: MEDIUM
-            
             new WaveConfig(
                 1,  // Mutant 1
                 2,  // Mutant 2
@@ -65,7 +65,6 @@ public class WaveSpawner : MonoBehaviour
             ),
 
             // Round 4: HARD
-            // 2 big Mutant 1s, more Mutant 2s, a big zombie pack.
             new WaveConfig(
                 2,   // Mutant 1
                 3,   // Mutant 2
@@ -92,7 +91,7 @@ public class WaveSpawner : MonoBehaviour
         currentRound++;
         Debug.Log("Starting Round: " + currentRound);
 
-        // Rounds 1�4 = normal mixed waves
+        // Rounds 1–4 = normal mixed waves
         if (currentRound >= 1 && currentRound <= 4)
         {
             WaveConfig wave = waves[currentRound - 1];
@@ -117,7 +116,6 @@ public class WaveSpawner : MonoBehaviour
 
     bool NoEnemiesAlive()
     {
-        
         return GameObject.FindGameObjectsWithTag("Enemy").Length == 0;
     }
 
@@ -136,15 +134,21 @@ public class WaveSpawner : MonoBehaviour
         for (int i = 0; i < wave.zombieCount; i++)
             toSpawn.Add(zombiePrefab);
 
-
         foreach (GameObject enemy in toSpawn)
         {
             Transform sp = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            Instantiate(enemy, sp.position, sp.rotation);
+            GameObject obj = Instantiate(enemy, sp.position, sp.rotation);
+
+            // ✅ Assign waypoints to any enemy that uses EnemyAI
+            EnemyAI ai = obj.GetComponent<EnemyAI>();
+            if (ai != null)
+            {
+                ai.AssignWaypoints(mutantWaypoints);
+            }
+
             yield return new WaitForSeconds(spawnDelay);
         }
 
         isSpawning = false;
     }
-
 }
