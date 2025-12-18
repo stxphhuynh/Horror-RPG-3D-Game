@@ -14,12 +14,12 @@ Eric Soto
 
 
 Current Target for Game:
-People who are into RPG horro survival games. 
+People who are into RPG horror survival games. 
 
 
 General goals for each person:
 Steph
- - Mapping (cemetery and abandoned hospital)
+ - Mapping (cemetery)
  - Menu connecting play and quit buttons to go to specific scenes
  - Add Weapons
  - Player animation
