@@ -211,7 +211,7 @@ MonoBehaviour:
   chaseSpeed: 3
   patrolSpeed: 2
   attackSoundCooldown: 1.5
-  knockbackForce: 2
+  knockbackForce: 5
   knockbackDuration: 0.1
 --- !u!114 &4189617486254048822
 MonoBehaviour:
