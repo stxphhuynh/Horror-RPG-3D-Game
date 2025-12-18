@@ -28,6 +28,10 @@ public class WaveSpawner : MonoBehaviour
     private bool isSpawning = false;
     private bool hasStarted = false;
 
+    [Header("Game Over/Win")]
+    public GameOverUI gameOverUI;
+    public bool gameOverShown = false;
+
     private struct WaveConfig
     {
         public int mutant1Count;
@@ -48,10 +52,10 @@ public class WaveSpawner : MonoBehaviour
     {
         waves = new WaveConfig[]
         {
-            new WaveConfig(0, 1, 4),
-            new WaveConfig(1, 1, 6),
-            new WaveConfig(1, 2, 8),
-            new WaveConfig(2, 3, 10),
+            new WaveConfig(0, 1, 2),
+            new WaveConfig(1, 1, 3),
+            new WaveConfig(1, 2, 3),
+            new WaveConfig(2, 2, 3),
         };
     }
 
@@ -79,14 +83,33 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
-        if (hasStarted && !isSpawning && NoEnemiesAlive())
+        if (hasStarted && !isSpawning && NoEnemiesAlive() && currentRound < totalRounds)
         {
             StartNextRound();
+        }
+
+        // all rounds done, no enemies, show game over screen
+        if (!gameOverShown && currentRound >= totalRounds && NoEnemiesAlive())
+        {
+            gameOverShown = true;
+
+            Debug.Log("All waves complete! You WIN!");
+            if (roundText != null)
+                roundText.text = "All Rounds Complete!";
+            if (gameOverUI != null)
+            {
+                gameOverUI.ShowGameOver();
+            }
+
         }
     }
 
     void StartNextRound()
-    {
+    {   
+        // all rounds done, return
+        if (currentRound >= totalRounds) {
+            return;
+        }
         // Heal player between rounds (but not before round 1)
         if (currentRound > 0 && playerHealth != null)
         {
@@ -97,21 +120,18 @@ public class WaveSpawner : MonoBehaviour
         currentRound++;
         UpdateRoundUI();
 
+        // waves 1 - 4
         if (currentRound >= 1 && currentRound <= 4)
         {
             StartCoroutine(SpawnWave(waves[currentRound - 1]));
         }
         else if (currentRound == 5)
         {
-            WaveConfig bossWave = new WaveConfig(5, 4, 14);
+            // final wave
+            WaveConfig bossWave = new WaveConfig(3, 3, 3);
             StartCoroutine(SpawnWave(bossWave));
         }
-        else
-        {
-            Debug.Log("All waves complete! You WIN!");
-            if (roundText != null)
-                roundText.text = "All Rounds Complete!";
-        }
+
     }
 
     void UpdateRoundUI()

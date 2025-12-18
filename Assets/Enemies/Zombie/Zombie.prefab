@@ -983,7 +983,7 @@ MonoBehaviour:
   patrolSpeed: 1
   attackSoundCooldown: 1.5
   knockbackForce: 5
-  knockbackDuration: 0.1
+  knockbackDuration: 0.2
 --- !u!114 &4907732365095748539
 MonoBehaviour:
   m_ObjectHideFlags: 0
