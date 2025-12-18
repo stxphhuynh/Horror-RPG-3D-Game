@@ -9877,6 +9877,8 @@ MonoBehaviour:
   - {fileID: 1251377347}
   - {fileID: 2040102412}
   spawnDelay: 3
+  gameOverUI: {fileID: 1742981614}
+  gameOverShown: 0
 --- !u!4 &443410465
 Transform:
   m_ObjectHideFlags: 0
@@ -13934,7 +13936,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &626951694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26843,11 +26845,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8310175573034525234, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.6406906
+      value: 4.016839
       objectReference: {fileID: 0}
     - target: {fileID: 8310175573034525234, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.611156
+      value: -4.3221736
+      objectReference: {fileID: 0}
+    - target: {fileID: 8310175573034525234, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9963414
+      objectReference: {fileID: 0}
+    - target: {fileID: 8310175573034525234, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.08546216
+      objectReference: {fileID: 0}
+    - target: {fileID: 8310175573034525234, guid: 5c063fdc81794da62b456e08ed6b4f42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 9.805
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
